@@ -46,9 +46,9 @@ export default function BusinessCard() {
   const [name, setName] = useState<string>('');
   const [telegramLink, setTelegramLink] = useState<string>('');
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    submitData({ name, telegramLink });
+    await submitData({ name, telegramLink });
     setIsModalOpen(false);
   };
 
@@ -57,7 +57,7 @@ export default function BusinessCard() {
       <Card className="w-full max-w-2xl shadow-2xl rounded-xl border border-gray-200">
         <CardHeader className="bg-white p-6 border-b border-gray-100">
           <CardTitle className="text-5xl font-bold text-center text-black-800">
-            <h1 className={handjet.className}>Мобильная робототехника</h1>
+            <h1 className={handjet.className}>Робототехника</h1>
           </CardTitle>
         </CardHeader>
         <CardContent className={`p-6 space-y-4 text-gray-700 ${ubuntu.className}`}>
@@ -68,13 +68,13 @@ export default function BusinessCard() {
           </p>
 
           <div className="space-y-3">
-            <h3 className="text-xl font-semibold">Категории:</h3>
+            <h3 className="text-xl font-semibold">Направления:</h3>
             <ul className="list-none space-y-2">
               <li className="pl-4">
-                <strong className="text-gray-900">Эксплуатация сервисных роботов:</strong> Овладейте эксплуатацией и программированием сервисных роботов. Узнайте о реальных приложениях робототехники.
+                <strong className="text-gray-900">Эксплуатация сервисных роботов</strong>
               </li>
               <li className="pl-4">
-                <strong className="text-gray-900">Мобильная робототехника:</strong> Погрузитесь в мир мобильной робототехники, сочетая программное и аппаратное обеспечение для динамических сред. Бросьте вызов себе и выходите за пределы традиционной робототехники.
+                <strong className="text-gray-900">Мобильная робототехника</strong> 
               </li>
             </ul>
           </div>
@@ -98,14 +98,14 @@ export default function BusinessCard() {
             className="w-full sm:w-auto bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition"
             onClick={() => setIsModalOpen(true)}
           >
-            Записаться на программу
+            Записаться к нам
           </Button>
         </CardFooter>
 
         {isModalOpen && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
             <div className="bg-white p-8 rounded-lg shadow-lg w-96">
-              <h3 className="text-2xl font-semibold mb-4 text-center">Регистрация</h3>
+              <h3 className="text-2xl font-semibold mb-4 text-center">Оставить нам свои контакты</h3>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <input
                   type="text"
@@ -137,4 +137,5 @@ export default function BusinessCard() {
     </div>
   );
 }
+
 
