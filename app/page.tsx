@@ -1,101 +1,140 @@
-import Image from "next/image";
+'use client';
+import { FormEvent, useState } from 'react';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Handjet, Ubuntu_Mono } from 'next/font/google';
 
-export default function Home() {
+const handjet = Handjet({
+  weight: '500',
+  subsets: ['latin'],
+  display: 'swap',
+});
+
+const ubuntu = Ubuntu_Mono({
+  weight: '400',
+  subsets: ['cyrillic'],
+});
+
+// Тип данных для отправки на сервер
+interface SubmissionData {
+  name: string;
+  telegramLink: string;
+}
+
+// Функция для отправки данных на сервер
+const submitData = async (data: SubmissionData) => {
+  try {
+    const response = await fetch('/api/submit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to submit data');
+    }
+    alert('Данные успешно отправлены!');
+  } catch (error) {
+    alert('Ошибка при отправке данных');
+  }
+};
+
+export default function BusinessCard() {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [name, setName] = useState<string>('');
+  const [telegramLink, setTelegramLink] = useState<string>('');
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    submitData({ name, telegramLink });
+    setIsModalOpen(false);
+  };
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center p-6">
+      <Card className="w-full max-w-2xl shadow-2xl rounded-xl border border-gray-200">
+        <CardHeader className="bg-white p-6 border-b border-gray-100">
+          <CardTitle className="text-5xl font-bold text-center text-black-800">
+            <h1 className={handjet.className}>Мобильная робототехника</h1>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className={`p-6 space-y-4 text-gray-700 ${ubuntu.className}`}>
+          <p className="text-lg text-left">
+            <span className="font-bold">Если вы хотите </span>научиться программировать и стремитесь экспериментировать с роботами, это ваш шанс. Напишите свою программу,
+            чтобы робот выполнял действия, которые вы задумали. А также мы вас обучим всем необходимым навыкам и знаниям для достижения успеха. Если это вызывает у вас интерес,
+            мы ждем вас в нашей команде.
+          </p>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+          <div className="space-y-3">
+            <h3 className="text-xl font-semibold">Категории:</h3>
+            <ul className="list-none space-y-2">
+              <li className="pl-4">
+                <strong className="text-gray-900">Эксплуатация сервисных роботов:</strong> Овладейте эксплуатацией и программированием сервисных роботов. Узнайте о реальных приложениях робототехники.
+              </li>
+              <li className="pl-4">
+                <strong className="text-gray-900">Мобильная робототехника:</strong> Погрузитесь в мир мобильной робототехники, сочетая программное и аппаратное обеспечение для динамических сред. Бросьте вызов себе и выходите за пределы традиционной робототехники.
+              </li>
+            </ul>
+          </div>
+
+          <div className="space-y-3">
+            <h3 className="text-xl font-semibold">Наш стек технологий:</h3>
+            <ul className="list-none space-y-1">
+              <li><strong className="text-gray-900">Эксплуатация сервисных роботов:</strong> Linux, Git, Python, ROS</li>
+              <li><strong className="text-gray-900">Мобильная робототехника:</strong> Git, Java, Python</li>
+            </ul>
+          </div>
+
+          <div className="space-y-3">
+            <h3 className="text-xl font-semibold">Мы находимся в кабинете 228</h3>
+          </div>
+        </CardContent>
+
+        <CardFooter className="bg-white p-6 flex justify-center border-t border-gray-100">
+          <Button
+            size="lg"
+            className="w-full sm:w-auto bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition"
+            onClick={() => setIsModalOpen(true)}
           >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+            Записаться на программу
+          </Button>
+        </CardFooter>
+
+        {isModalOpen && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+            <div className="bg-white p-8 rounded-lg shadow-lg w-96">
+              <h3 className="text-2xl font-semibold mb-4 text-center">Регистрация</h3>
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <input
+                  type="text"
+                  placeholder="Ваше имя"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="w-full p-2 border rounded"
+                  required
+                />
+                <input
+                  type="text"
+                  placeholder="Ссылка на Telegram"
+                  value={telegramLink}
+                  onChange={(e) => setTelegramLink(e.target.value)}
+                  className="w-full p-2 border rounded"
+                  required
+                />
+                <Button type="submit" className="w-full bg-blue-600 text-white rounded-lg shadow">
+                  Отправить
+                </Button>
+                <Button onClick={() => setIsModalOpen(false)} className="w-full bg-gray-300 text-black rounded-lg shadow">
+                  Отмена
+                </Button>
+              </form>
+            </div>
+          </div>
+        )}
+      </Card>
     </div>
   );
 }
+
