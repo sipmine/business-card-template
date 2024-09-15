@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Business card template
 
-## Getting Started
+## Description
+this is a simple template for your business cards it has a minimal design and was made purely for the sake of signing people up for electives inside my college, the code for the main page except for the fonts and the submission form was made using v0.dev, the code for submitting the data was made using LLM, and everything that doesn't go into it like writing to the database etc was done by me.
 
-First, run the development server:
+Project launced on vercel.com
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+## Instaltion
+
+First, create an .env file 
+
+```
+touch .env
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+now add environment variables this variables i get from vercel_db postgress
+```t
+POSTGRES_URL="URL"
+POSTGRES_PRISMA_URL="PRISMA_URL"
+POSTGRES_URL_NO_SSL="URL_NO_SSL"
+POSTGRES_URL_NON_POOLING="POLLING"
+POSTGRES_USER="USER"
+POSTGRES_HOST="HOST"
+POSTGRES_PASSWORD="PASSWORD"
+POSTGRES_DATABASE="DATABASE"
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### init prisma & next
+Install dependency 
+node version v22.8.0
+```bash
+npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+init db
+```bash
+npx prisma init
+```
 
-## Learn More
+make migrations
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npx prisma migrate dev --name init          
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### run 
+From bash
+```bash
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+From docker
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Soon
